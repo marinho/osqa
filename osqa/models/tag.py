@@ -18,7 +18,7 @@ class Tag(BaseModel, DeletableContent):
     active = ActiveTagManager()
 
     class Meta(DeletableContent.Meta):
-        db_table = u'tag'
+        db_table = 'osqa_tag'
         ordering = ('-used_count', 'name')
 
     def __unicode__(self):
@@ -31,5 +31,5 @@ class MarkedTag(models.Model):
     reason = models.CharField(max_length=16, choices=TAG_MARK_REASONS)
 
     class Meta:
-        app_label = 'forum'
+        app_label = 'osqa'
 

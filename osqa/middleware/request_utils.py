@@ -25,4 +25,4 @@ class RequestUtils(object):
     def process_request(self, request):
         self.request = request
         request.utils = self
-        return None
+

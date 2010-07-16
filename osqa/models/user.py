@@ -215,7 +215,7 @@ class User(BaseModel, DjangoUser):
         return self.is_superuser or self.reputation >= int(settings.REP_TO_UPLOAD)
 
     class Meta:
-        app_label = 'forum'
+        app_label = 'osqa'
 
 class Activity(GenericContent):
     """
@@ -227,8 +227,8 @@ class Activity(GenericContent):
     is_auditted    = models.BooleanField(default=False)
 
     class Meta:
-        app_label = 'forum'
-        db_table = u'activity'
+        app_label = 'osqa'
+        db_table = 'osqa_activity'
 
     def __unicode__(self):
         return u'[%s] was active at %s' % (self.user.username, self.active_at)
@@ -300,7 +300,7 @@ class SubscriptionSettings(models.Model):
     notify_accepted = models.BooleanField(default=False)
 
     class Meta:
-        app_label = 'forum'
+        app_label = 'osqa'
 
 from osqa.utils.time import one_day_from_now
 
@@ -359,7 +359,7 @@ class ValidationHash(models.Model):
 
     class Meta:
         unique_together = ('user', 'type')
-        app_label = 'forum'
+        app_label = 'osqa'
 
     def __str__(self):
         return self.hash_code
@@ -371,4 +371,4 @@ class AuthKeyUserAssociation(models.Model):
     added_at = models.DateTimeField(default=datetime.datetime.now)
 
     class Meta:
-        app_label = 'forum'
+        app_label = 'osqa'

@@ -5,7 +5,7 @@ from osqa import const
 register = template.Library()
 
 class UserSignatureNode(template.Node):
-    template = template.loader.get_template('users/signature.html')
+    template = template.loader.get_template('osqa/users/signature.html')
 
     def __init__(self, user, format):
         self.user = template.Variable(user)
@@ -28,7 +28,7 @@ def user_signature(parser, token):
 
 
 class ActivityNode(template.Node):
-    template = template.loader.get_template('users/activity.html')
+    template = template.loader.get_template('osqa/users/activity.html')
 
     def __init__(self, activity):
         self.activity = template.Variable(activity)

@@ -8,7 +8,7 @@ from django.conf import settings
 
 register = template.Library()
 
-@register.inclusion_tag('node/vote_buttons.html')
+@register.inclusion_tag('osqa/node/vote_buttons.html')
 def vote_buttons(post, user):
     context = {
         'post': post,
@@ -24,7 +24,7 @@ def vote_buttons(post, user):
 
     return context
 
-@register.inclusion_tag('node/accept_button.html')
+@register.inclusion_tag('osqa/node/accept_button.html')
 def accept_button(answer, user):
     return {
         'can_accept': user.is_authenticated() and user.can_accept_answer(answer),
@@ -32,7 +32,7 @@ def accept_button(answer, user):
         'user': user
     }
 
-@register.inclusion_tag('node/favorite_mark.html')
+@register.inclusion_tag('osqa/node/favorite_mark.html')
 def favorite_mark(question, user):
     try:
         FavoriteQuestion.objects.get(question=question, user=user)
@@ -47,7 +47,7 @@ def favorite_mark(question, user):
 def post_control(text, url, command=False, title=""):
     return {'text': text, 'url': url, 'command': command, 'title': title}
 
-@register.inclusion_tag('node/post_controls.html')
+@register.inclusion_tag('osqa/node/post_controls.html')
 def post_controls(post, user):
     controls = []
 
@@ -84,7 +84,7 @@ def post_controls(post, user):
 
     return {'controls': controls}
 
-@register.inclusion_tag('node/comments.html')
+@register.inclusion_tag('osqa/node/comments.html')
 def comments(post, user):
     all_comments = post.comments.filter(deleted=False).order_by('added_at')
 

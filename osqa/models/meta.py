@@ -14,7 +14,7 @@ class Vote(MetaContent, CancelableContent, UserContent):
     active = ActiveObjectManager()
 
     class Meta(MetaContent.Meta):
-        db_table = u'vote'
+        db_table = 'osqa_vote'
 
     def __unicode__(self):
         return '[%s] voted at %s: %s' %(self.user, self.voted_at, self.vote)
@@ -49,7 +49,7 @@ class FlaggedItem(MetaContent, UserContent):
     active = ActiveObjectManager()
 
     class Meta(MetaContent.Meta):
-        db_table = u'flagged_item'
+        db_table = 'osqa_flagged_item'
 
     def __unicode__(self):
         return '[%s] flagged at %s' %(self.user, self.flagged_at)

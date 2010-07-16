@@ -22,7 +22,7 @@ class Question(QandA):
     favorited_by         = models.ManyToManyField(User, through='FavoriteQuestion', related_name='favorite_questions')
 
     class Meta(QandA.Meta):
-        db_table = u'question'
+        db_table = 'osqa_question'
 
     @property
     def headline(self):
@@ -103,8 +103,8 @@ class FavoriteQuestion(models.Model):
 
     class Meta:
         unique_together = ('question', 'user')
-        app_label = 'forum'
-        db_table = u'favorite_question'
+        app_label = 'osqa'
+        db_table = 'osqa_favorite_question'
 
     def __unicode__(self):
         return '[%s] favorited at %s' %(self.user, self.added_at)
@@ -129,7 +129,7 @@ class QuestionSubscription(models.Model):
     last_view = models.DateTimeField(default=datetime.datetime.now())
 
     class Meta:
-        app_label = 'forum'
+        app_label = 'osqa'
 
 
 class QuestionRevision(NodeRevision):

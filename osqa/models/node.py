@@ -36,7 +36,7 @@ class NodeContent(models.Model):
 
     class Meta:
         abstract = True
-        app_label = 'forum'
+        app_label = 'osqa'
 
 class NodeMetaClass(models.Model.__metaclass__):
     types = {}
@@ -215,7 +215,7 @@ class Node(BaseModel, NodeContent, DeletableContent):
         return data
 
     class Meta:
-        app_label = 'forum'
+        app_label = 'osqa'
 
 
 class NodeRevision(BaseModel, NodeContent):
@@ -226,7 +226,7 @@ class NodeRevision(BaseModel, NodeContent):
 
     class Meta:
         unique_together = ('node', 'revision')
-        app_label = 'forum'
+        app_label = 'osqa'
 
 
 from user import ValidationHash
@@ -236,4 +236,4 @@ class AnonymousNode(Node):
     convertible_to = models.CharField(max_length=16, default='node')
 
     class Meta:
-        app_label = 'forum'
+        app_label = 'osqa'

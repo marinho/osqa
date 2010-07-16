@@ -25,8 +25,8 @@ class Badge(BaseModel):
     awarded_to    = models.ManyToManyField(User, through='Award', related_name='badges')
 
     class Meta:
-        app_label = 'forum'
-        db_table = u'badge'
+        app_label = 'osqa'
+        db_table = 'osqa_badge'
         ordering = ('name',)
         unique_together = ('name', 'type')
 
@@ -83,8 +83,8 @@ class Award(GenericContent, UserContent):
 
     class Meta:
         #unique_together = ('content_type', 'object_id', 'user', 'badge')
-        app_label = 'forum'
-        db_table = u'award'
+        app_label = 'osqa'
+        db_table = 'osqa_award'
 
 
 class Repute(MetaContent, CancelableContent, UserContent):
@@ -123,5 +123,5 @@ class Repute(MetaContent, CancelableContent, UserContent):
         super(Repute, self).save(*args, **kwargs)
 
     class Meta:
-        app_label = 'forum'
-        db_table = u'repute'
+        app_label = 'osqa'
+        db_table = 'osqa_repute'

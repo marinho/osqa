@@ -66,7 +66,7 @@ class KeyValue(models.Model):
     objects = KeyValueManager()
 
     class Meta:
-        app_label = 'forum'
+        app_label = 'osqa'
 
     def save(self, *args, **kwargs):
         super(KeyValue, self).save(*args, **kwargs)

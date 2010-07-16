@@ -8,6 +8,7 @@ from node import Node, NodeRevision, NodeMetaClass, AnonymousNode
 from comment import Comment
 from utils import KeyValue
 
+# Sets South support to customized fields (otherwise South doesn't recognize them and raise a warning)
 try:
     from south.modelsinspector import add_introspection_rules
     add_introspection_rules([], [r"^osqa\.models\.\w+\.\w+"])
@@ -16,12 +17,12 @@ except:
 
 from base import *
 
+# Signal that signs an instance as "is new" everytime it is save and there is no ID
 def is_new(sender, instance, **kwargs):
     try:
         instance._is_new = not bool(instance.id)
     except:
         pass
-
 pre_save.connect(is_new)
 
 __all__ = [
@@ -31,7 +32,6 @@ __all__ = [
         'Tag', 'Comment', 'Vote', 'FlaggedItem', 'MarkedTag', 'Badge', 'Award', 'Repute',
         'Activity', 'ValidationHash', 'AuthKeyUserAssociation', 'SubscriptionSettings', 'KeyValue', 'User',
         ]
-
 
 from osqa.modules import get_modules_script_classes
 

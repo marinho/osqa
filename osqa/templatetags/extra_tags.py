@@ -66,7 +66,7 @@ LEADING_PAGE_RANGE_DISPLAYED = TRAILING_PAGE_RANGE_DISPLAYED = 5
 LEADING_PAGE_RANGE = TRAILING_PAGE_RANGE = 4
 NUM_PAGES_OUTSIDE_RANGE = 1
 ADJACENT_PAGES = 2
-@register.inclusion_tag("paginator.html")
+@register.inclusion_tag("osqa/paginator.html")
 def cnprog_paginator(context):
     """
     custom paginator tag
@@ -111,7 +111,7 @@ def cnprog_paginator(context):
             "extend_url" : extend_url
         }
 
-@register.inclusion_tag("pagesize.html")
+@register.inclusion_tag("osqa/pagesize.html")
 def cnprog_pagesize(context):
     """
     display the pagesize selection boxes for paginator
@@ -123,7 +123,7 @@ def cnprog_pagesize(context):
             "is_paginated": context["is_paginated"]
         }
 
-@register.inclusion_tag("post_contributor_info.html")
+@register.inclusion_tag("osqa/post_contributor_info.html")
 def post_contributor_info(post,contributor_type='original_author'):
     """contributor_type: original_author|last_updater
     """

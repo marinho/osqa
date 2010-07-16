@@ -8,7 +8,7 @@ class Answer(QandA):
     accepted_by = models.ForeignKey(User, null=True)
 
     class Meta(QandA.Meta):
-        db_table = u'answer'
+        db_table = 'osqa_answer'
 
     @property
     def headline(self):

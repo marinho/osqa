@@ -76,7 +76,7 @@ class BaseModel(models.Model):
 
     class Meta:
         abstract = True
-        app_label = 'forum'
+        app_label = 'osqa'
 
     def __init__(self, *args, **kwargs):
         super(BaseModel, self).__init__(*args, **kwargs)
@@ -140,7 +140,7 @@ class GenericContent(models.Model):
 
     class Meta:
         abstract = True
-        app_label = 'forum'
+        app_label = 'osqa'
 
 class MetaContent(BaseModel):
     node = models.ForeignKey('Node', null=True, related_name='%(class)ss')
@@ -158,7 +158,7 @@ class MetaContent(BaseModel):
 
     class Meta:
         abstract = True
-        app_label = 'forum'
+        app_label = 'osqa'
 
 from user import User
 
@@ -167,7 +167,7 @@ class UserContent(models.Model):
 
     class Meta:
         abstract = True
-        app_label = 'forum'
+        app_label = 'osqa'
 
 
 marked_deleted = django.dispatch.Signal(providing_args=["instance", "deleted_by"])
@@ -181,7 +181,7 @@ class DeletableContent(models.Model):
 
     class Meta:
         abstract = True
-        app_label = 'forum'
+        app_label = 'osqa'
 
     def mark_deleted(self, user):
         if not self.deleted:
@@ -218,7 +218,7 @@ class CancelableContent(models.Model):
 
     class Meta:
         abstract = True
-        app_label = 'forum'
+        app_label = 'osqa'
 
 
 from node import Node, NodeRevision
@@ -229,7 +229,7 @@ class QandA(Node):
 
     class Meta:
         abstract = True
-        app_label = 'forum'
+        app_label = 'osqa'
 
     def wikify(self):
         if not self.wiki:
