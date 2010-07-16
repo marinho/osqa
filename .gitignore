@@ -1,0 +1,12 @@
+*.orig
+*.pyc
+*.pyo
+*.pyd
+.*.swp
+*~
+.bzr
+.svn
+Thumbs.db
+*$py.class
+.DS_Store
+
