@@ -13,6 +13,7 @@ from django.db.models.signals import post_delete, post_save, pre_save, pre_delet
 from django.utils.translation import ugettext as _
 from django.utils.safestring import mark_safe
 from django.contrib.sitemaps import ping_google
+from django.contrib.auth.models import User
 import django.dispatch
 from django.conf import settings
 from osqa import const
@@ -159,8 +160,6 @@ class MetaContent(BaseModel):
     class Meta:
         abstract = True
         app_label = 'osqa'
-
-from user import User
 
 class UserContent(models.Model):
     user = models.ForeignKey(User, related_name='%(class)ss')

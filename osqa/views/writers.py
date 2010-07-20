@@ -108,9 +108,9 @@ def ask(request):
                 data = {
                     "user_ip":request.META["REMOTE_ADDR"],
                     "user_agent":request.environ['HTTP_USER_AGENT'],
-                    "comment_author":request.user.real_name,
+                    "comment_author":request.user.userosqaprofile.real_name,
                     "comment_author_email":request.user.email,
-                    "comment_author_url":request.user.website,
+                    "comment_author_url":request.user.userosqaprofile.website,
                     "comment":request.POST['text']
                 }
                 if Node.isSpam(request.POST['text'], data):

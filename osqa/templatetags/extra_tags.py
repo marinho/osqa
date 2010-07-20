@@ -36,7 +36,7 @@ def gravatar(user, size):
         gravatar = user['gravatar']
         username = user['username']
     except (TypeError, AttributeError, KeyError):
-        gravatar = user.gravatar
+        gravatar = user.userosqaprofile.gravatar
         username = user.username
     return mark_safe(GRAVATAR_TEMPLATE % {
         'size': size,
@@ -143,27 +143,27 @@ def post_contributor_info(post,contributor_type='original_author'):
 @register.simple_tag
 def get_score_badge(user):
     BADGE_TEMPLATE = '<span class="score" title="%(reputation)s %(reputationword)s">%(reputation)s</span>'
-    if user.gold > 0 :
+    if user.userosqaprofile.gold > 0 :
         BADGE_TEMPLATE = '%s%s' % (BADGE_TEMPLATE, '<span title="%(gold)s %(badgesword)s">'
         '<span class="badge1">&#9679;</span>'
         '<span class="badgecount">%(gold)s</span>'
         '</span>')
-    if user.silver > 0:
+    if user.userosqaprofile.silver > 0:
         BADGE_TEMPLATE = '%s%s' % (BADGE_TEMPLATE, '<span title="%(silver)s %(badgesword)s">'
         '<span class="silver">&#9679;</span>'
         '<span class="badgecount">%(silver)s</span>'
         '</span>')
-    if user.bronze > 0:
+    if user.userosqaprofile.bronze > 0:
         BADGE_TEMPLATE = '%s%s' % (BADGE_TEMPLATE, '<span title="%(bronze)s %(badgesword)s">'
         '<span class="bronze">&#9679;</span>'
         '<span class="badgecount">%(bronze)s</span>'
         '</span>')
     BADGE_TEMPLATE = smart_unicode(BADGE_TEMPLATE, encoding='utf-8', strings_only=False, errors='strict')
     return mark_safe(BADGE_TEMPLATE % {
-        'reputation' : user.reputation,
-        'gold' : user.gold,
-        'silver' : user.silver,
-        'bronze' : user.bronze,
+        'reputation' : user.userosqaprofile.reputation,
+        'gold' : user.userosqaprofile.gold,
+        'silver' : user.userosqaprofile.silver,
+        'bronze' : user.userosqaprofile.bronze,
 		'badgesword' : _('badges'),
 		'reputationword' : _('reputation points'),
     })

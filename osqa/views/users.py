@@ -157,9 +157,9 @@ def user_stats(request, user):
     questions = Question.objects.filter(author=user, deleted=False).order_by('-added_at')
     answers = Answer.objects.filter(author=user, deleted=False).order_by('-added_at')
 
-    up_votes = user.get_up_vote_count()
-    down_votes = user.get_down_vote_count()
-    votes_today = user.get_vote_count_today()
+    up_votes = user.userosqaprofile.get_up_vote_count()
+    down_votes = user.userosqaprofile.get_down_vote_count()
+    votes_today = user.userosqaprofile.get_vote_count_today()
     votes_total = int(settings.MAX_VOTES_PER_DAY)
 
     user_tags = Tag.objects.filter(Q(nodes__author=user) | Q(nodes__children__author=user)) \

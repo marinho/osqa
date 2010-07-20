@@ -20,7 +20,7 @@ QUESTIONS_PER_PAGE_CHOICES = (
    (50, u'50'),
 )
 
-class UserManager(CachedManager):
+class UserOSQAProfileManager(CachedManager):
     def get_site_owner(self):
         return self.all().order_by('date_joined')[0]
 
@@ -76,7 +76,9 @@ class AnonymousUser(DjangoAnonymousUser):
     def can_upload_files(self):
         return False
 
-class User(BaseModel, DjangoUser):
+class UserOSQAProfile(models.Model):
+    user = models.OneToOneField(DjangoUser)
+
     is_approved = models.BooleanField(default=False)
     email_isvalid = models.BooleanField(default=False)
     email_key = models.CharField(max_length=32, null=True)
@@ -96,17 +98,17 @@ class User(BaseModel, DjangoUser):
     date_of_birth = models.DateField(null=True, blank=True)
     about = models.TextField(blank=True)
     
-    objects = UserManager()
+    objects = UserOSQAProfileManager()
 
     @property
     def gravatar(self):
-        return md5(self.email).hexdigest()
+        return md5(self.user.email).hexdigest()
 
     def save(self, *args, **kwargs):
         if self.reputation < 0:
             self.reputation = 1
 
-        super(User, self).save(*args, **kwargs)
+        super(UserOSQAProfile, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
         return self.get_profile_url()
@@ -129,13 +131,13 @@ class User(BaseModel, DjangoUser):
 
     def get_vote_count_today(self):
         today = datetime.date.today()
-        return self.votes.filter(voted_at__range=(today - datetime.timedelta(days=1), today)).count()
+        return self.user.votes.filter(voted_at__range=(today - datetime.timedelta(days=1), today)).count()
 
     def get_up_vote_count(self):
-        return self.votes.filter(vote=1).count()
+        return self.user.votes.filter(vote=1).count()
 
     def get_down_vote_count(self):
-        return self.votes.filter(vote=-1).count()
+        return self.user.votes.filter(vote=-1).count()
 
     def get_reputation_by_upvoted_today(self):
         today = datetime.datetime.now()
@@ -221,7 +223,7 @@ class Activity(GenericContent):
     """
     We keep some history data for user activities
     """
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(DjangoUser)
     activity_type = models.SmallIntegerField(choices=TYPE_ACTIVITY)
     active_at = models.DateTimeField(default=datetime.datetime.now)
     is_auditted    = models.BooleanField(default=False)
@@ -274,7 +276,7 @@ class Activity(GenericContent):
 activity_record = django.dispatch.Signal(providing_args=['instance'])
 
 class SubscriptionSettings(models.Model):
-    user = models.OneToOneField(User, related_name='subscription_settings')
+    user = models.OneToOneField(DjangoUser, related_name='subscription_settings')
 
     enable_notifications = models.BooleanField(default=True)
 
@@ -353,7 +355,7 @@ class ValidationHash(models.Model):
     seed = models.CharField(max_length=12)
     expiration = models.DateTimeField(default=one_day_from_now)
     type = models.CharField(max_length=12)
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(DjangoUser)
 
     objects = ValidationHashManager()
 
@@ -367,8 +369,18 @@ class ValidationHash(models.Model):
 class AuthKeyUserAssociation(models.Model):
     key = models.CharField(max_length=255,null=False,unique=True)
     provider = models.CharField(max_length=64)
-    user = models.ForeignKey(User, related_name="auth_keys")
+    user = models.ForeignKey(DjangoUser, related_name="auth_keys")
     added_at = models.DateTimeField(default=datetime.datetime.now)
 
     class Meta:
         app_label = 'osqa'
+
+# SIGNALS
+from django.db.models import signals
+
+def user_post_save(sender, instance, signal, **kwargs):
+    # Creates missing OSQA profile for user that is being saved
+    UserOSQAProfile.objects.get_or_create(user=instance)
+
+signals.post_save.connect(user_post_save, sender=DjangoUser)
+

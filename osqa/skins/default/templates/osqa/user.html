@@ -1,4 +1,4 @@
-{% extends "base_content.html" %}
+{% extends "osqa/base_content.html" %}
 <!-- user.html -->
 {% load extra_tags %}
 {% load extra_filters %}
@@ -43,10 +43,10 @@
 {% endblock %}
 {% block content %}
     <div id="mainbar-full">
-        {% include "users/info.html" %}
-        {% include "users/tabs.html" %}
+        {% include "osqa/users/info.html" %}
+        {% include "osqa/users/tabs.html" %}
         {% block usercontent %}
         {% endblock %}
-        {%comment%}{% include "users/footer.html" %}{%endcomment%}
+        {%comment%}{% include "osqa/users/footer.html" %}{%endcomment%}
 	</div>
 {% endblock %}<!-- end user.html -->

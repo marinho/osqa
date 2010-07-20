@@ -1,15 +1,12 @@
-from django.contrib.auth.middleware import AuthenticationMiddleware
-from osqa.models.user import AnonymousUser
+from osqa.models.user import UserOSQAProfile
 
-class ExtendedUser(AuthenticationMiddleware):    
+class ExtendedUser(object):
     def process_request(self, request):
-        super(ExtendedUser, self).process_request(request)
-        if request.user.is_authenticated():
-            try:
-                request.user = request.user.user
-                return None
-            except:
-                pass
+        """Old code disabled because this middleware is a big workaround"""
 
-        request.user = AnonymousUser()
-        return None
+        # Force saving the current user if it hasn't a OSQA profile. This calls a signal
+        # that creates the profile.
+        if request.user.is_authenticated() and\
+           UserOSQAProfile.objects.filter(user=request.user).count() == 0:
+            request.user.save()
+
