@@ -22,7 +22,7 @@ def get_next_url(request):
 
 class StrippedNonEmptyCharField(forms.CharField):
     def clean(self,value):
-        value = value.strip()
+        value = (value or '').strip()
         if self.required and value == '':
             raise forms.ValidationError(_('this field is required'))
         return value

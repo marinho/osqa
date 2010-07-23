@@ -215,15 +215,15 @@ class EditUserForm(forms.Form):
             self.fields['username'].initial = user.username
             self.fields['username'].user_instance = user
         self.fields['email'].initial = user.email
-        self.fields['realname'].initial = user.real_name
-        self.fields['website'].initial = user.website
-        self.fields['city'].initial = user.location
+        self.fields['realname'].initial = user.userosqaprofile.real_name
+        self.fields['website'].initial = user.userosqaprofile.website
+        self.fields['city'].initial = user.userosqaprofile.location
 
-        if user.date_of_birth is not None:
-            self.fields['birthday'].initial = user.date_of_birth
+        if user.userosqaprofile.date_of_birth is not None:
+            self.fields['birthday'].initial = user.userosqaprofile.date_of_birth
         else:
             self.fields['birthday'].initial = '1990-01-01'
-        self.fields['about'].initial = user.about
+        self.fields['about'].initial = user.userosqaprofile.about
         self.user = user
 
     def clean_email(self):
