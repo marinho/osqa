@@ -1,6 +1,6 @@
-from forum.utils.forms import NextUrlField,  UserNameField,  UserEmailField, SetPasswordForm
-from forum.models import Question
-from forum.modules import call_all_handlers
+from osqa.utils.forms import NextUrlField,  UserNameField,  UserEmailField, SetPasswordForm
+from osqa.models import Question
+from osqa.modules import call_all_handlers
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext as _
 from django.contrib.auth import authenticate

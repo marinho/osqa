@@ -7,10 +7,10 @@ from django.utils.html import *
 
 from models import *
 
-from forum.forms import AskForm
-from forum.views.readers import _get_tags_cache_json
-from forum.models import *
-from forum.utils.html import sanitize_html
+from osqa.forms import AskForm
+from osqa.views.readers import _get_tags_cache_json
+from osqa.models import *
+from osqa.utils.html import sanitize_html
 
 def books(request):
     return HttpResponseRedirect(reverse('books') + '/mysql-zhaoyang')

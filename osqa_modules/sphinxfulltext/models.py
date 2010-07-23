@@ -1,4 +1,4 @@
-from forum.models import Question
+from osqa.models import Question
 from django.conf import settings
 from djangosphinx.manager import SphinxSearch
 

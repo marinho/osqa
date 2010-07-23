@@ -1,5 +1,5 @@
 import os
-from forum.models import KeyValue
+from osqa.models import KeyValue
 from django.db import connection, transaction
 
 KEY = 'PG_FTSTRIGGERS_VERSION'

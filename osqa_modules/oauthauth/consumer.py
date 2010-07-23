@@ -3,7 +3,7 @@ import urllib2
 import httplib
 import time
 
-from forum.authentication.base import AuthenticationConsumer, InvalidAuthentication
+from osqa.authentication.base import AuthenticationConsumer, InvalidAuthentication
 from django.utils.translation import ugettext as _
 
 from lib import oauth

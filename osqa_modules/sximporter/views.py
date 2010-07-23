@@ -1,6 +1,6 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from forum.views.admin import super_user_required
+from osqa.views.admin import super_user_required
 import importer
 from zipfile import ZipFile
 

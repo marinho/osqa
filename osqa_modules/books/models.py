@@ -1,6 +1,6 @@
 from django.db import models
-from forum.models import User
-from forum.models import Question
+from osqa.models import User
+from osqa.models import Question
 from django.core.urlresolvers import reverse
 from django.utils.http import urlquote  as django_urlquote
 from django.template.defaultfilters import slugify
@@ -30,7 +30,7 @@ class Book(models.Model):
         return self.title
         
     class Meta:
-        app_label = 'forum'
+        app_label = 'osqa'
         db_table = u'book'
 
 class BookAuthorInfo(models.Model):
@@ -44,7 +44,7 @@ class BookAuthorInfo(models.Model):
     last_edited_at = models.DateTimeField()
 
     class Meta:
-        app_label = 'forum'
+        app_label = 'osqa'
         db_table = u'book_author_info'
 
 class BookAuthorRss(models.Model):
@@ -59,5 +59,5 @@ class BookAuthorRss(models.Model):
     added_at = models.DateTimeField()
 
     class Meta:
-        app_label = 'forum'
+        app_label = 'osqa'
         db_table = u'book_author_rss'

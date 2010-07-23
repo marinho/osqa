@@ -1,4 +1,4 @@
-from forum.models import Question
+from osqa.models import Question
 
 def question_search(keywords):
     return Question.objects.extra(

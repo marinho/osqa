@@ -1,5 +1,5 @@
-from forum.settings import BADGES_SET
-from forum.settings.base import Setting
+from osqa.settings import BADGES_SET
+from osqa.settings.base import Setting
 
 BUG_BUSTER_VOTES_UP = Setting('BUG_BUSTER_VOTES_UP', 3, BADGES_SET, dict(
 label = "Bug Buster Votes Up",

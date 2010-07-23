@@ -3,12 +3,12 @@ from datetime import timedelta
 from django.db.models.signals import post_save
 from django.utils.translation import ugettext as _
 
-from forum.badges.base import PostCountableAbstractBadge, ActivityAbstractBadge, FirstActivityAbstractBadge, \
+from osqa.badges.base import PostCountableAbstractBadge, ActivityAbstractBadge, FirstActivityAbstractBadge, \
         ActivityCountAbstractBadge, CountableAbstractBadge, AbstractBadge, NodeCountableAbstractBadge
-from forum.models import Node, Question, Answer, Activity, Tag
-from forum.models.user import activity_record
-from forum.models.base import denorm_update
-from forum import const
+from osqa.models import Node, Question, Answer, Activity, Tag
+from osqa.models.user import activity_record
+from osqa.models.base import denorm_update
+from osqa import const
 
 import settings
 

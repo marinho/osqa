@@ -1,4 +1,4 @@
-from forum.models import AuthKeyUserAssociation
+from osqa.models import AuthKeyUserAssociation
 from django.http import HttpResponse
 
 def user_is_registered(request):

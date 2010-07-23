@@ -2,7 +2,7 @@ import hashlib
 from time import time
 from datetime import datetime
 from urllib import urlopen,  urlencode
-from forum.authentication.base import AuthenticationConsumer, ConsumerTemplateContext, InvalidAuthentication
+from osqa.authentication.base import AuthenticationConsumer, ConsumerTemplateContext, InvalidAuthentication
 from django.utils.translation import ugettext as _
 
 import settings

@@ -1,11 +1,11 @@
-from forum.models import User
+from osqa.models import User
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
 
 from forms import ClassicRegisterForm
-from forum.authentication.forms import SimpleEmailSubscribeForm
-from forum.views.auth import login_and_forward, send_validation_email
+from osqa.authentication.forms import SimpleEmailSubscribeForm
+from osqa.views.auth import login_and_forward, send_validation_email
 
 def register(request):
     if request.method == 'POST':

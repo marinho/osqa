@@ -1,4 +1,4 @@
-from forum.authentication.base import AuthenticationConsumer, ConsumerTemplateContext, InvalidAuthentication
+from osqa.authentication.base import AuthenticationConsumer, ConsumerTemplateContext, InvalidAuthentication
 from forms import ClassicLoginForm
 
 class LocalAuthConsumer(AuthenticationConsumer):

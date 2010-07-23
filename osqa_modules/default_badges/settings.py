@@ -1,5 +1,5 @@
-from forum.settings import BADGES_SET
-from forum.settings.base import Setting
+from osqa.settings import BADGES_SET
+from osqa.settings.base import Setting
 from django.utils.translation import ugettext_lazy as _
 
 POPULAR_QUESTION_VIEWS = Setting('POPULAR_QUESTION_VIEWS', 1000, BADGES_SET, dict(

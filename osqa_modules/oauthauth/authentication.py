@@ -1,5 +1,5 @@
 from consumer import OAuthAbstractAuthConsumer
-from forum.authentication.base import ConsumerTemplateContext
+from osqa.authentication.base import ConsumerTemplateContext
 
 try:
     import json as simplejson

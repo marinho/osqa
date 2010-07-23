@@ -1,5 +1,5 @@
-from forum.settings import EXT_KEYS_SET
-from forum.settings.base import Setting
+from osqa.settings import EXT_KEYS_SET
+from osqa.settings.base import Setting
 
 TWITTER_CONSUMER_KEY = Setting('TWITTER_CONSUMER_KEY', '', EXT_KEYS_SET, dict(
 label = "Twitter consumer key",

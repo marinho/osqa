@@ -1,5 +1,5 @@
-from forum.settings import EXT_KEYS_SET
-from forum.settings.base import Setting
+from osqa.settings import EXT_KEYS_SET
+from osqa.settings.base import Setting
 
 RECAPTCHA_PUB_KEY = Setting('RECAPTCHA_PUB_KEY', '', EXT_KEYS_SET, dict(
 label = "Recaptch public key",

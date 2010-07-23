@@ -1,6 +1,6 @@
-from forum.badges.base import CountableAbstractBadge
-from forum.models import Question, Tag
-from forum import const
+from osqa.badges.base import CountableAbstractBadge
+from osqa.models import Question, Tag
+from osqa import const
 from django.utils.translation import ugettext as _
 import settings
 

@@ -1,5 +1,5 @@
 from consumer import OpenIdAbstractAuthConsumer
-from forum.authentication.base import ConsumerTemplateContext
+from osqa.authentication.base import ConsumerTemplateContext
 
 class GoogleAuthConsumer(OpenIdAbstractAuthConsumer):
     def get_user_url(self, request):

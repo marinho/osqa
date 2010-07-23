@@ -1,7 +1,7 @@
 from django.utils.html import escape
 from django.http import get_host
 
-from forum.authentication.base import AuthenticationConsumer, InvalidAuthentication
+from osqa.authentication.base import AuthenticationConsumer, InvalidAuthentication
 import settings
 
 from openid.yadis import xri
