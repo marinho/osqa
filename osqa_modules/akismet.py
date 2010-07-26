@@ -58,7 +58,7 @@ Usage example::
 import os, sys
 from urllib import urlencode
 from django.conf import settings
-from osqa import settings
+#from osqa import settings
 
 import socket
 if hasattr(socket, 'setdefaulttimeout'):
@@ -120,8 +120,8 @@ class Akismet(object):
         if agent is None:
             agent = DEFAULTAGENT % __version__
         self.user_agent = user_agent % (agent, __version__)
-        self.key = settings.WORDPRESS_API_KEY
-        self.blog_url = settings.WORDPRESS_BLOG_URL
+        self.key = settings.AKISMET_API_KEY
+        self.blog_url = settings.AKISMET_BLOG_URL
 
 
     def _getURL(self):
@@ -161,8 +161,8 @@ class Akismet(object):
             except IndexError:
                 raise APIKeyError("Your 'apikey.txt' is invalid.")
         else:
-            self.key = settings.WORDPRESS_API_KEY
-            self.blog_url = blog_url
+            self.key = settings.AKISMET_API_KEY
+            self.blog_url = blog_url or settings.AKISMET_BLOG_URL
 
 
     def verify_key(self):
