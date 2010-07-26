@@ -14,5 +14,5 @@ class LocalAuthContext(ConsumerTemplateContext):
     mode = 'STACK_ITEM'
     weight = 1000
     human_name = 'Local authentication'
-    stack_item_template = 'modules/localauth/loginform.html'
+    stack_item_template = 'osqa_modules/localauth/loginform.html'
     show_to_logged_in_user = False

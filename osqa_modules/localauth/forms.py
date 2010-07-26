@@ -79,10 +79,8 @@ class ClassicLoginForm(forms.Form):
                 error_list.append(_("This account is inactive."))
             if len(error_list) > 0:
                 error_list.insert(0,_('Login failed.'))
-            try:
-                self.user_cache = user_.user
-            except:
-                error_list.append(_('This user is not a valid user'))
+
+            self.user_cache = user_
 
         elif password == None and username == None:
             error_list.append(_('Please enter username and password'))

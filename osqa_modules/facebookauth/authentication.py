@@ -81,7 +81,7 @@ class FacebookAuthContext(ConsumerTemplateContext):
     type = 'CUSTOM'
     weight = 100
     human_name = 'Facebook'
-    code_template = 'modules/facebookauth/button.html'
+    code_template = 'osqa_modules/facebookauth/button.html'
     extra_css = ["http://www.facebook.com/css/connect/connect_button.css"]
 
     API_KEY = settings.FB_API_KEY

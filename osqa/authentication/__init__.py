@@ -2,6 +2,7 @@ import re
 import django.dispatch
 from osqa.modules import get_modules_script_classes
 from osqa.authentication.base import AuthenticationConsumer, ConsumerTemplateContext
+from django.conf import settings
 
 class ConsumerAndContext:
     def __init__(self, id, consumer, context):
@@ -26,11 +27,12 @@ contexts = dict([
             in get_modules_script_classes('authentication', ConsumerTemplateContext).items()
         ])
 
-AUTH_PROVIDERS = dict([
+AUTH_PROVIDERS_AVAILABLE = dict([
             (name, ConsumerAndContext(name, consumers[name], contexts[name])) for name in consumers.keys()
             if name in contexts
         ])
 
+AUTH_PROVIDERS = dict([(k,v) for k,v in AUTH_PROVIDERS_AVAILABLE.items() if k in settings.ENABLED_AUTH_PROVIDERS])
 
 #todo: probably this don't belong here, also this post_stored routine needs a lot of work
 user_logged_in = django.dispatch.Signal(providing_args=["user", "old_session"])

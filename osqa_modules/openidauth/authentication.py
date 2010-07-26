@@ -192,5 +192,5 @@ class OpenIdUrlAuthContext(ConsumerTemplateContext):
     mode = 'STACK_ITEM'
     weight = 300
     human_name = 'OpenId url'
-    stack_item_template = 'modules/openidauth/openidurl.html'
+    stack_item_template = 'osqa_modules/openidauth/openidurl.html'
     icon = '/media/images/openid/openid-inputicon.gif'
