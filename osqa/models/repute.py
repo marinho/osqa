@@ -113,13 +113,17 @@ class Repute(MetaContent, CancelableContent, UserContent):
 
     def cancel(self):
         if super(Repute, self).cancel():
-            self.user.reputation = self.user.reputation - self.value
-            self.user.save()
+            profile = self.user.userosqaprofile
+            profile.reputation = profile.reputation - self.value
+            profile.save()
 
     def save(self, *args, **kwargs):
-        self.user_previous_rep = self.user.reputation
-        self.user.reputation = self.user.reputation + self.value
-        self.user.save()
+        profile = self.user.userosqaprofile
+
+        self.user_previous_rep = profile.reputation
+        profile.reputation = profile.reputation + self.value
+        profile.save()
+
         super(Repute, self).save(*args, **kwargs)
 
     class Meta:

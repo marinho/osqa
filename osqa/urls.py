@@ -134,6 +134,9 @@ urlpatterns += patterns('',
     url(r'^feeds/rss/$', RssLastestQuestionsFeed, name="latest_questions_feed"),
 )
 
+from osqa_modules.localauth import urls as localauth_urls
+urlpatterns += localauth_urls.urlpatterns
+
 if 'rosetta' in settings.INSTALLED_APPS:
     urlpatterns += patterns('',
         url(r'^rosetta/', include('rosetta.urls')),

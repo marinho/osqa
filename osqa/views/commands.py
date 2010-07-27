@@ -79,10 +79,10 @@ def vote_post(request, id, vote_type):
     if user == post.author:
         raise CannotDoOnOwnException(_('vote'))
 
-    if not (vote_type == 'up' and user.can_vote_up() or user.can_vote_down()):
+    if not (vote_type == 'up' and user.userosqaprofile.can_vote_up() or user.userosqaprofile.can_vote_down()):
         raise NotEnoughRepPointsException(vote_type == 'up' and _('upvote') or _('downvote'))
 
-    user_vote_count_today = user.get_vote_count_today()
+    user_vote_count_today = user.userosqaprofile.get_vote_count_today()
 
     if user_vote_count_today >= int(settings.MAX_VOTES_PER_DAY):
         raise NotEnoughLeftException(_('votes'), str(settings.MAX_VOTES_PER_DAY))
@@ -157,7 +157,7 @@ def like_comment(request, id):
     if user == comment.user:
         raise CannotDoOnOwnException(_('like'))
 
-    if not user.can_like_comment(comment):
+    if not user.userosqaprofile.can_like_comment(comment):
         raise NotEnoughRepPointsException( _('like comments'))    
 
     try:
@@ -184,7 +184,7 @@ def delete_comment(request, id):
     if not user.is_authenticated():
         raise AnonymousNotAllowedException(_('delete comments'))
 
-    if not user.can_delete_comment(comment):
+    if not user.userosqaprofile.can_delete_comment(comment):
         raise NotEnoughRepPointsException( _('delete comments'))
 
     comment.mark_deleted(user)
@@ -232,10 +232,10 @@ def comment(request, id):
     if 'id' in request.POST:
         comment = get_object_or_404(Comment, id=request.POST['id'])
 
-        if not user.can_edit_comment(comment):
+        if not user.userosqaprofile.can_edit_comment(comment):
             raise NotEnoughRepPointsException( _('edit comments'))
     else:
-        if not user.can_comment(post):
+        if not user.userosqaprofile.can_comment(post):
             raise NotEnoughRepPointsException( _('comment'))
 
         comment = Comment(parent=post)
@@ -287,7 +287,7 @@ def accept_answer(request, id):
     answer = get_object_or_404(Answer, id=id)
     question = answer.question
 
-    if not user.can_accept_answer(answer):
+    if not user.userosqaprofile.can_accept_answer(answer):
         raise Exception(_("Sorry but only the question author can accept an answer"))
 
     commands = {}

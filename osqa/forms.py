@@ -164,7 +164,8 @@ class RevisionForm(forms.Form):
             (r[0], u'%s - %s (%s) %s' % (r[0], r[1], r[2].strftime(date_format), r[3]))
             for r in revisions]
 
-        self.fields['revision'].initial = post.active_revision.revision
+        if post.active_revision:
+            self.fields['revision'].initial = post.active_revision.revision
 
 class EditQuestionForm(forms.Form):
     title  = TitleField()
@@ -178,9 +179,10 @@ class EditQuestionForm(forms.Form):
         if revision is None:
             revision = question.active_revision
 
-        self.fields['title'].initial = revision.title
-        self.fields['text'].initial = revision.body
-        self.fields['tags'].initial = revision.tagnames
+        if revision:
+            self.fields['title'].initial = revision.title
+            self.fields['text'].initial = revision.body
+            self.fields['tags'].initial = revision.tagnames
             
         # Once wiki mode is enabled, it can't be disabled
         if not question.wiki:

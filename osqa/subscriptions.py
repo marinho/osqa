@@ -39,7 +39,7 @@ def question_posted(instance, **kwargs):
     recipients = create_recipients_dict(subscribers)
 
     send_email(settings.EMAIL_SUBJECT_PREFIX + _("New question on %(app_name)s") % dict(app_name=settings.APP_SHORT_NAME),
-               recipients, "notifications/newquestion.html", {
+               recipients, "osqa/notifications/newquestion.html", {
         'question': question,
     })
 

@@ -66,7 +66,7 @@ def on_vote(instance, created, **kwargs):
             instance.user.reputes.create(value=-int(settings.REP_LOST_BY_DOWNVOTING),
             question=question, reputation_type=TYPE_REPUTATION_LOST_BY_DOWNVOTING)
 
-        if instance.vote == 1 and post.author.get_reputation_by_upvoted_today() >= int(settings.MAX_REP_BY_UPVOTE_DAY):
+        if instance.vote == 1 and post.author.userosqaprofile.get_reputation_by_upvoted_today() >= int(settings.MAX_REP_BY_UPVOTE_DAY):
             return
 
         repute_type, repute_value = (instance.vote == 1) and (

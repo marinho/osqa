@@ -88,7 +88,7 @@ def badge(request, id):
     awards = Award.objects.extra(
         select={'id': 'auth_user.id', 
                 'name': 'auth_user.username', 
-                'rep':'forum_user.reputation',
+                'rep':'forum_user.userosqaprofile.reputation',
                 'gold': 'forum_user.gold',
                 'silver': 'forum_user.silver',
                 'bronze': 'forum_user.bronze'},
