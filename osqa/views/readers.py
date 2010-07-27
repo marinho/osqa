@@ -228,7 +228,7 @@ def question(request, id, slug):
         raise Http404
 
     answer_form = AnswerForm(question)
-    answers = request.user.get_visible_answers(question)
+    answers = request.user.userosqaprofile.get_visible_answers(question)
 
     if answers is not None:
         answers = [a for a in answers.order_by("-accepted", order_by)

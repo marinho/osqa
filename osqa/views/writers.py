@@ -45,7 +45,7 @@ def upload(request):#ajax upload file to a question or answer
     try:
         f = request.FILES['file-upload']
         # check upload permission
-        if not request.user.can_upload_files():
+        if not request.user.userosqaprofile.can_upload_files():
             raise UploadPermissionNotAuthorized()
 
         # check file type
@@ -134,11 +134,11 @@ def ask(request):
 @login_required
 def edit_question(request, id):
     question = get_object_or_404(Question, id=id)
-    if question.deleted and not request.user.can_view_deleted_post(question):
+    if question.deleted and not request.user.userosqaprofile.can_view_deleted_post(question):
         raise Http404
-    if request.user.can_edit_post(question):
+    if request.user.userosqaprofile.can_edit_post(question):
         return _edit_question(request, question)
-    elif request.user.can_retag_questions():
+    elif request.user.userosqaprofile.can_retag_questions():
         return _retag_question(request, question)
     else:
         raise Http404
@@ -210,9 +210,9 @@ def _edit_question(request, question):
 @login_required
 def edit_answer(request, id):
     answer = get_object_or_404(Answer, id=id)
-    if answer.deleted and not request.user.can_view_deleted_post(answer):
+    if answer.deleted and not request.user.userosqaprofile.can_view_deleted_post(answer):
         raise Http404
-    elif not request.user.can_edit_post(answer):
+    elif not request.user.userosqaprofile.can_edit_post(answer):
         raise Http404
 
     if request.method == "POST":
@@ -260,9 +260,9 @@ def answer(request, id):
                 data = {
                     "user_ip":request.META["REMOTE_ADDR"],
                     "user_agent":request.environ['HTTP_USER_AGENT'],
-                    "comment_author":request.user.real_name,
+                    "comment_author":request.user.userosqaprofile.real_name,
                     "comment_author_email":request.user.email,
-                    "comment_author_url":request.user.website,
+                    "comment_author_url":request.user.userosqaprofile.website,
                     "comment":request.POST['text']
                 }
                 if Node.isSpam(request.POST['text'], data):

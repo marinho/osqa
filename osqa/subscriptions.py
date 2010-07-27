@@ -71,7 +71,7 @@ def answer_posted(instance, **kwargs):
     recipients = create_recipients_dict(subscribers)
 
     send_email(settings.EMAIL_SUBJECT_PREFIX + _("New answer to '%(question_title)s'") % dict(question_title=question.title),
-               recipients, "notifications/newanswer.html", {
+               recipients, "osqa/notifications/newanswer.html", {
         'question': question,
         'answer': answer
     })
@@ -153,7 +153,7 @@ def member_joined(sender, instance, created, **kwargs):
 
     recipients = create_recipients_dict(subscribers)
 
-    send_email(settings.EMAIL_SUBJECT_PREFIX + _("%(username)s is a new member on %(app_name)s") % dict(username=instance.username, app_name=settings.APP_SHORT_NAME),
+    send_email(settings.EMAIL_SUBJECT_PREFIX + _("%(username)s is a new member on %(app_name)s") % dict(username=instance.user.username, app_name=settings.APP_SHORT_NAME),
                recipients, "notifications/newmember.html", {
         'newmember': instance,
     })
@@ -210,13 +210,13 @@ def record_answer_event(instance, created, **kwargs):
                 except:
                     cnt = 1
                 m.message = u"You have received %d <a href=\"%s?sort=responses\">new responses</a>."\
-                            % (cnt+1, q_author.get_profile_url())
+                            % (cnt+1, q_author.userosqaprofile.get_profile_url())
 
                 m.save()
                 break
         if not found_match:
             msg = u"You have received a <a href=\"%s?sort=responses\">new response</a>."\
-                    % q_author.get_profile_url()
+                    % q_author.userosqaprofile.get_profile_url()
 
             q_author.message_set.create(message=msg)
 

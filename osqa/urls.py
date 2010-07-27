@@ -1,16 +1,16 @@
 import startup
-
+import logging
 import os.path
+
 from django.conf import settings
 from django.conf.urls.defaults import *
-from django.contrib import admin
+from django.utils.translation import ugettext as _
+
 from osqa import views as app
 from osqa.feed import RssLastestQuestionsFeed
 from osqa.sitemap import QuestionsSitemap
-from django.utils.translation import ugettext as _
-import logging
+from osqa.modules import get_modules_script
 
-admin.autodiscover()
 feeds = {
     'rss': RssLastestQuestionsFeed
 }
@@ -20,16 +20,13 @@ sitemaps = {
 
 APP_PATH = os.path.dirname(__file__)
 
-from osqa.modules import get_modules_script
-
-module_patterns = get_modules_script('urls')
-
 urlpatterns = patterns('')
 
-for pattern_file in module_patterns:
-    pattern = getattr(pattern_file, 'urlpatterns', None)
-    if pattern:
-        urlpatterns += pattern
+#module_patterns = get_modules_script('urls')
+#for pattern_file in module_patterns:
+#    pattern = getattr(pattern_file, 'urlpatterns', None)
+#    if pattern:
+#        urlpatterns += pattern
 
 urlpatterns += patterns('',
     url(r'^$', app.readers.index, name='index'),
@@ -107,8 +104,6 @@ urlpatterns += patterns('',
     url(r'^%s$' % _('badges/'),app.meta.badges, name='badges'),
     url(r'^%s(?P<id>\d+)//*' % _('badges/'), app.meta.badge, name='badge'),
     url(r'^%s%s$' % (_('messages/'), _('markread/')),app.commands.read_message, name='read_message'),
-    # (r'^admin/doc/' % _('admin/doc'), include('django.contrib.admindocs.urls')),
-    url(r'^%s(.*)' % _('nimda/'), admin.site.root, name='osqa_admin'),
     url(r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}, name='feeds'),
     url(r'^%s$' % _('upload/'), app.writers.upload, name='upload'),
     url(r'^%s$' % _('search/'), app.readers.search, name='search'),

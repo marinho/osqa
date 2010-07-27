@@ -27,7 +27,7 @@ def vote_buttons(post, user):
 @register.inclusion_tag('osqa/node/accept_button.html')
 def accept_button(answer, user):
     return {
-        'can_accept': user.is_authenticated() and user.can_accept_answer(answer),
+        'can_accept': user.is_authenticated() and user.userosqaprofile.can_accept_answer(answer),
         'answer': answer,
         'user': user
     }
@@ -58,27 +58,27 @@ def post_controls(post, user):
             controls.append(post_control(_('permanent link'), '#%d' % post.id, title=_("answer permanent link")))
 
         edit_url = reverse('edit_' + post_type, kwargs={'id': post.id})
-        if user.can_edit_post(post):
+        if user.userosqaprofile.can_edit_post(post):
             controls.append(post_control(_('edit'), edit_url))
-        elif post_type == 'question' and user.can_retag_questions():
+        elif post_type == 'question' and user.userosqaprofile.can_retag_questions():
             controls.append(post_control(_('retag'), edit_url))
 
         if post_type == 'question':
-            if post.closed and user.can_reopen_question(post):
+            if post.closed and user.userosqaprofile.can_reopen_question(post):
                 controls.append(post_control(_('reopen'), reverse('reopen', kwargs={'id': post.id})))
-            elif not post.closed and user.can_close_question(post):
+            elif not post.closed and user.userosqaprofile.can_close_question(post):
                 controls.append(post_control(_('close'), reverse('close', kwargs={'id': post.id})))
 
-        if user.can_flag_offensive(post):
+        if user.userosqaprofile.can_flag_offensive(post):
             label = _('flag')
             
-            if user.can_view_offensive_flags(post):
+            if user.userosqaprofile.can_view_offensive_flags(post):
                 label =  "%s (%d)" % (label, post.flaggeditems.count())
 
             controls.append(post_control(label, reverse('flag_post', kwargs={'id': post.id}),
                     command=True, title=_("report as offensive (i.e containing spam, advertising, malicious text, etc.)")))
 
-        if user.can_delete_post(post):
+        if user.userosqaprofile.can_delete_post(post):
             controls.append(post_control(_('delete'), reverse('delete_post', kwargs={'id': post.id}),
                     command=True))
 
@@ -97,9 +97,9 @@ def comments(post, user):
     showing = 0
     for c in all_comments:
         context = {
-            'can_delete': user.can_delete_comment(c),
-            'can_like': user.can_like_comment(c),
-            'can_edit': user.can_edit_comment(c)
+            'can_delete': user.userosqaprofile.can_delete_comment(c),
+            'can_like': user.userosqaprofile.can_like_comment(c),
+            'can_edit': user.userosqaprofile.can_edit_comment(c)
         }
 
         if c in top_scorers or c.is_reply_to(user):
@@ -120,7 +120,7 @@ def comments(post, user):
     return {
         'comments': comments,
         'post': post,
-        'can_comment': user.can_comment(post),
+        'can_comment': user.userosqaprofile.can_comment(post),
         'max_length': settings.FORM_MAX_COMMENT_BODY,
         'showing': showing,
         'total': len(all_comments),

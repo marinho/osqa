@@ -221,7 +221,7 @@
 
 {% block sidebar %}
 <div class="boxC" id="subscription_box">
-    {% include "subscription_status.html" %}
+    {% include "osqa/subscription_status.html" %}
 </div>
 {% cache 60 questions_tags settings.APP_URL question.id %}
 <div class="boxC">

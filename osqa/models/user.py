@@ -123,10 +123,10 @@ class UserOSQAProfile(models.Model):
         self.message_set.all().delete()
 
     def get_profile_url(self):
-        return "/%s%d/%s" % (_('users/'), self.id, slugify(self.username))
+        return "/%s%d/%s" % (_('users/'), self.id, slugify(self.user.username))
 
     def get_profile_link(self):
-        profile_link = u'<a href="%s">%s</a>' % (self.get_profile_url(),self.username)
+        profile_link = u'<a href="%s">%s</a>' % (self.get_profile_url(),self.user.username)
         return mark_safe(profile_link)
 
     def get_vote_count_today(self):
@@ -154,67 +154,67 @@ class UserOSQAProfile(models.Model):
         return self.flaggeditems.filter(flagged_at__range=(today - datetime.timedelta(days=1), today)).count()
 
     def get_visible_answers(self, question):
-        if self.is_superuser:
+        if self.user.is_superuser:
             return question.answers
         else:
             return question.answers.filter(models.Q(deleted=False) | models.Q(deleted_by=self))
 
     def can_view_deleted_post(self, post):
-        return self.is_superuser or post.author == self
+        return self.user.is_superuser or post.author == self
 
     def can_vote_up(self):
-        return self.reputation >= int(settings.REP_TO_VOTE_UP) or self.is_superuser
+        return self.reputation >= int(settings.REP_TO_VOTE_UP) or self.user.is_superuser
 
     def can_vote_down(self):
-        return self.reputation >= int(settings.REP_TO_VOTE_DOWN) or self.is_superuser
+        return self.reputation >= int(settings.REP_TO_VOTE_DOWN) or self.user.is_superuser
 
     def can_flag_offensive(self, post=None):
         if post is not None and post.author == self:
             return False
-        return self.is_superuser or self.reputation >= int(settings.REP_TO_FLAG)
+        return self.user.is_superuser or self.reputation >= int(settings.REP_TO_FLAG)
 
     def can_view_offensive_flags(self, post=None):
         if post is not None and post.author == self:
             return True
-        return self.is_superuser or self.reputation >= int(settings.REP_TO_VIEW_FLAGS)
+        return self.user.is_superuser or self.reputation >= int(settings.REP_TO_VIEW_FLAGS)
 
     def can_comment(self, post):
         return self == post.author or self.reputation >= int(settings.REP_TO_COMMENT
-        ) or self.is_superuser or (post.__class__.__name__ == "Answer" and self == post.question.author)
+        ) or self.user.is_superuser or (post.__class__.__name__ == "Answer" and self == post.question.author)
 
     def can_like_comment(self, comment):
-        return self != comment.user and (self.reputation >= int(settings.REP_TO_LIKE_COMMENT) or self.is_superuser)
+        return self != comment.user and (self.reputation >= int(settings.REP_TO_LIKE_COMMENT) or self.user.is_superuser)
 
     def can_edit_comment(self, comment):
         return (comment.user == self and comment.added_at >= datetime.datetime.now() - datetime.timedelta(minutes=60)
-        ) or self.is_superuser
+        ) or self.user.is_superuser
 
     def can_delete_comment(self, comment):
-        return self == comment.user or self.reputation >= int(settings.REP_TO_DELETE_COMMENTS) or self.is_superuser
+        return self == comment.user or self.reputation >= int(settings.REP_TO_DELETE_COMMENTS) or self.user.is_superuser
 
     def can_accept_answer(self, answer):
-        return self.is_superuser or self == answer.question.author
+        return self.user.is_superuser or self == answer.question.author
 
     def can_edit_post(self, post):
-        return self.is_superuser or self == post.author or self.reputation >= int(settings.REP_TO_EDIT_OTHERS
+        return self.user.is_superuser or self == post.author or self.reputation >= int(settings.REP_TO_EDIT_OTHERS
         ) or (post.wiki and self.reputation >= int(settings.REP_TO_EDIT_WIKI))
 
     def can_retag_questions(self):
         return self.reputation >= int(settings.REP_TO_RETAG)
 
     def can_close_question(self, question):
-        return self.is_superuser or (self == question.author and self.reputation >= int(settings.REP_TO_CLOSE_OWN)
+        return self.user.is_superuser or (self == question.author and self.reputation >= int(settings.REP_TO_CLOSE_OWN)
         ) or self.reputation >= int(settings.REP_TO_CLOSE_OTHERS)
 
     def can_reopen_question(self, question):
-        return self.is_superuser or (self == question.author and self.reputation >= settings.REP_TO_REOPEN_OWN)
+        return self.user.is_superuser or (self == question.author and self.reputation >= settings.REP_TO_REOPEN_OWN)
 
     def can_delete_post(self, post):
-        return self.is_superuser or (self == post.author and (post.__class__.__name__ == "Answer" or
+        return self.user.is_superuser or (self == post.author and (post.__class__.__name__ == "Answer" or
         not post.answers.filter(~Q(author=self)).count()))
 
     def can_upload_files(self):
-        return self.is_superuser or self.reputation >= int(settings.REP_TO_UPLOAD)
+        return self.user.is_superuser or self.reputation >= int(settings.REP_TO_UPLOAD)
 
     class Meta:
         app_label = 'osqa'
@@ -381,6 +381,7 @@ from django.db.models import signals
 def user_post_save(sender, instance, signal, **kwargs):
     # Creates missing OSQA profile for user that is being saved
     UserOSQAProfile.objects.get_or_create(user=instance)
+    SubscriptionSettings.objects.get_or_create(user=instance)
 
 signals.post_save.connect(user_post_save, sender=DjangoUser)
 
