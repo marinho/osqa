@@ -18,6 +18,7 @@ def application_settings(context):
         'RESOURCE_REVISION':settings.RESOURCE_REVISION,
         'OSQA_SKIN':settings.OSQA_DEFAULT_SKIN,
         'APP_FAVICON':settings.APP_FAVICON,
+        'OSQA_MEDIA_URL':settings.OSQA_MEDIA_URL,
         }
     return {'settings':my_settings}
 
