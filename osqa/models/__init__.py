@@ -2,7 +2,7 @@ from question import Question ,QuestionRevision, FavoriteQuestion, QuestionSubsc
 from answer import Answer, AnswerRevision
 from tag import Tag, MarkedTag
 from meta import Vote, FlaggedItem
-from user import User, Activity, ValidationHash, AuthKeyUserAssociation, SubscriptionSettings
+from user import User, UserOSQAProfile, Activity, ValidationHash, AuthKeyUserAssociation, SubscriptionSettings
 from repute import Badge, Award, Repute
 from node import Node, NodeRevision, NodeMetaClass, AnonymousNode
 from comment import Comment

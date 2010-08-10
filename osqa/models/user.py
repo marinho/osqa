@@ -123,7 +123,8 @@ class UserOSQAProfile(models.Model):
         self.message_set.all().delete()
 
     def get_profile_url(self):
-        return "/%s%d/%s" % (_('users/'), self.id, slugify(self.user.username))
+        #return "/%s%d/%s" % (_('users/'), self.id, slugify(self.user.username))
+        return reverse('user_profile', kwargs={'id':self.user.pk, 'slug':self.user.username})
 
     def get_profile_link(self):
         profile_link = u'<a href="%s">%s</a>' % (self.get_profile_url(),self.user.username)

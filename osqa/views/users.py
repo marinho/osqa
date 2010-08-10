@@ -41,11 +41,11 @@ def users(request):
             objects_list = Paginator(User.objects.all().order_by('username'), USERS_PAGE_SIZE)
         # default
         else:
-            objects_list = Paginator(User.objects.all().order_by('-reputation'), USERS_PAGE_SIZE)
+            objects_list = Paginator(User.objects.all(), USERS_PAGE_SIZE) # .order_by('-reputation')
         base_url = reverse('users') + '?sort=%s&' % sortby
     else:
         sortby = "reputation"
-        objects_list = Paginator(User.objects.filter(username__icontains=suser).order_by('-reputation'), USERS_PAGE_SIZE)
+        objects_list = Paginator(User.objects.filter(username__icontains=suser), USERS_PAGE_SIZE)
         base_url = reverse('users') + '?name=%s&sort=%s&' % (suser, sortby)
 
     try:
@@ -125,7 +125,7 @@ def edit_user(request, id):
             if user.email and user.real_name and user.website and user.location and \
                 user.date_of_birth and user.about:
                 user_updated.send(sender=user.__class__, instance=user, updated_by=user)
-            return HttpResponseRedirect(user.get_profile_url())
+            return HttpResponseRedirect(user.userosqaprofile.get_profile_url())
     else:
         form = EditUserForm(user)
     return render_to_response('osqa/users/edit.html', {
