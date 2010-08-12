@@ -242,7 +242,7 @@ def temp_signin(request, user, code):
 
 def send_validation_email(user):
     hash = ValidationHash.objects.create_new(user, 'email', [user.email])
-    send_email(_("Email Validation"), [(user.username, user.email)], "auth/email_validation.html", {
+    send_email(_("Email Validation"), [(user.username, user.email)], "osqa/auth/email_validation.html", {
         'validation_code': hash,
         'user': user
     })

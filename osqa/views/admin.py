@@ -35,6 +35,7 @@ def index(request):
 @super_user_required    
 def settings_set(request, set_name):
     set = Setting.sets.get(set_name, None)
+    #raise Exception([s.name for s in set])
 
     if set is None:
         raise Http404

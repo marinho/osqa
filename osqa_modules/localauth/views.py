@@ -35,7 +35,7 @@ def register(request):
         form = ClassicRegisterForm(initial={'next':'/'})
         email_feeds_form = SimpleEmailSubscribeForm()
 
-    return render_to_response('auth/signup.html', {
+    return render_to_response('osqa/auth/signup.html', {
         'form': form,
         'email_feeds_form': email_feeds_form
         }, context_instance=RequestContext(request))

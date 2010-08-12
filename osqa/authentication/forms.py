@@ -38,11 +38,14 @@ class TemporaryLoginRequestForm(forms.Form):
 class SimpleEmailSubscribeForm(forms.Form):
     SIMPLE_SUBSCRIBE_CHOICES = (
         ('y',_('okay, let\'s try!')),
-        ('n',_('no OSQA community email please, thanks'))
+        ('n',_('don\'t send email please, thanks'))
     )
-    subscribe = forms.ChoiceField(widget=forms.widgets.RadioSelect(), \
-                                error_messages={'required':_('please choose one of the options above')},
-                                choices=SIMPLE_SUBSCRIBE_CHOICES)
+    subscribe = forms.ChoiceField(
+        widget=forms.widgets.RadioSelect(),
+        error_messages={'required':_('please choose one of the options above')},
+        choices=SIMPLE_SUBSCRIBE_CHOICES,
+        initial='n',
+    )
 
 
 class ChangePasswordForm(SetPasswordForm):

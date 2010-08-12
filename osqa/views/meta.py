@@ -13,6 +13,7 @@ from osqa.badges import ALL_BADGES
 from osqa import settings
 from osqa.utils.mail import send_email
 from osqa.settings.settingsmarkdown import *
+from osqa_modules.default_badges.settings import BADGES_PAGE_TEXT
 
 import re
 
@@ -81,6 +82,7 @@ def badges(request):#user status/reputation system
         'badges' : badges,
         'mybadges' : my_badges,
         'feedback_faq_url' : reverse('feedback'),
+        'text': BADGES_PAGE_TEXT.value,
     }, context_instance=RequestContext(request))
 
 def badge(request, id):

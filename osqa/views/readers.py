@@ -228,11 +228,15 @@ def question(request, id, slug):
         raise Http404
 
     answer_form = AnswerForm(question)
-    answers = request.user.userosqaprofile.get_visible_answers(question)
 
-    if answers is not None:
-        answers = [a for a in answers.order_by("-accepted", order_by)
+    if request.user.is_authenticated():
+        answers = request.user.userosqaprofile.get_visible_answers(question)
+
+        if answers is not None:
+            answers = [a for a in answers.order_by("-accepted", order_by)
                    if not a.deleted or a.author == request.user]
+    else:
+        answers = []
 
     objects_list = Paginator(answers, ANSWERS_PAGE_SIZE)
     page_objects = objects_list.page(page)

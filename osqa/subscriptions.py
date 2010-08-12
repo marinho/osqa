@@ -146,6 +146,9 @@ def member_joined(sender, instance, created, **kwargs):
     if not created:
         return
         
+    if not isinstance(instance, User):
+        instance = instance.user
+
     subscribers = User.objects.values('email', 'username').filter(
             subscription_settings__enable_notifications=True,
             subscription_settings__member_joins='i'
@@ -153,13 +156,12 @@ def member_joined(sender, instance, created, **kwargs):
 
     recipients = create_recipients_dict(subscribers)
 
-    send_email(settings.EMAIL_SUBJECT_PREFIX + _("%(username)s is a new member on %(app_name)s") % dict(username=instance.user.username, app_name=settings.APP_SHORT_NAME),
-               recipients, "notifications/newmember.html", {
+    send_email(settings.EMAIL_SUBJECT_PREFIX + _("%(username)s is a new member on %(app_name)s") % dict(username=instance.username, app_name=settings.APP_SHORT_NAME),
+               recipients, "osqa/notifications/newmember.html", {
         'newmember': instance,
     })
 
-    sub_settings = SubscriptionSettings(user=instance)
-    sub_settings.save()
+    SubscriptionSettings.objects.get_or_create(user=instance)
 
 post_save.connect(member_joined, sender=User, weak=False)
 
