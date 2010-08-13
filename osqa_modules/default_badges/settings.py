@@ -1,11 +1,7 @@
 from osqa.settings import BADGES_SET
 from osqa.settings.base import Setting
 from django.utils.translation import ugettext_lazy as _
-
-BADGES_PAGE_TEXT = Setting('BADGES_PAGE_TEXT', '', BADGES_SET, dict(
-label = _("Badges page text"),
-help_text = _("""
-""")))
+from django.forms.widgets import Textarea
 
 POPULAR_QUESTION_VIEWS = Setting('POPULAR_QUESTION_VIEWS', 1000, BADGES_SET, dict(
 label = _("Popular Question views"),
@@ -138,4 +134,11 @@ label = _("Taxonomist usage count"),
 help_text = _("""
 How many usages a tag needs to have for the tag creator to be awarded the Taxonomist badge. 
 """)))
+
+BADGES_PAGE_TEXT = Setting('BADGES_PAGE_TEXT', '', BADGES_SET, dict(
+label = _("Badges page text"),
+help_text = _("""
+Text to show on badges page top.
+"""),
+widget=Textarea(attrs={'rows': '20'})))
 
