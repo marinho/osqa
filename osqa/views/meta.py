@@ -95,7 +95,7 @@ def badge(request, id):
                 'silver': 'osqa_userosqaprofile.silver',
                 'bronze': 'osqa_userosqaprofile.bronze'},
         tables=['osqa_award', 'auth_user', 'osqa_userosqaprofile'],
-        where=['badge_id=%s AND user_id=auth_user.id AND osqa_userosqaprofile.user_ptr_id = auth_user.id'],
+        where=['badge_id=%s AND osqa_award.user_id=auth_user.id AND osqa_userosqaprofile.user_id = auth_user.id'],
         params=[id]
     ).distinct('id')
 
