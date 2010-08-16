@@ -90,7 +90,7 @@ def badge(request, id):
     awards = Award.objects.extra(
         select={'id': 'auth_user.id', 
                 'name': 'auth_user.username', 
-                'rep':'osqa_userosqaprofile.userosqaprofile.reputation',
+                'rep':'osqa_userosqaprofile.reputation',
                 'gold': 'osqa_userosqaprofile.gold',
                 'silver': 'osqa_userosqaprofile.silver',
                 'bronze': 'osqa_userosqaprofile.bronze'},
