@@ -142,7 +142,7 @@ class UserOSQAProfile(models.Model):
 
     def get_reputation_by_upvoted_today(self):
         today = datetime.datetime.now()
-        sum = self.reputes.filter(
+        sum = self.user.reputes.filter(
                 models.Q(reputation_type=TYPE_REPUTATION_GAIN_BY_UPVOTED) |
                 models.Q(reputation_type=TYPE_REPUTATION_LOST_BY_UPVOTE_CANCELED),
                 reputed_at__range=(today - datetime.timedelta(days=1), today)).aggregate(models.Sum('value'))

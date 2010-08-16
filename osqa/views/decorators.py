@@ -70,6 +70,7 @@ def command(func):
             }
 
         if request.is_ajax():
+        # Doesn't work properly on some browsers
             return HttpResponse(simplejson.dumps(response), mimetype="application/json")
         else:
             return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
