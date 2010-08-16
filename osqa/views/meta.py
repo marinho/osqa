@@ -90,12 +90,12 @@ def badge(request, id):
     awards = Award.objects.extra(
         select={'id': 'auth_user.id', 
                 'name': 'auth_user.username', 
-                'rep':'forum_user.userosqaprofile.reputation',
-                'gold': 'forum_user.gold',
-                'silver': 'forum_user.silver',
-                'bronze': 'forum_user.bronze'},
-        tables=['award', 'auth_user', 'forum_user'],
-        where=['badge_id=%s AND user_id=auth_user.id AND forum_user.user_ptr_id = auth_user.id'],
+                'rep':'osqa_userosqaprofile.userosqaprofile.reputation',
+                'gold': 'osqa_userosqaprofile.gold',
+                'silver': 'osqa_userosqaprofile.silver',
+                'bronze': 'osqa_userosqaprofile.bronze'},
+        tables=['osqa_award', 'auth_user', 'osqa_userosqaprofile'],
+        where=['badge_id=%s AND user_id=auth_user.id AND osqa_userosqaprofile.user_ptr_id = auth_user.id'],
         params=[id]
     ).distinct('id')
 
