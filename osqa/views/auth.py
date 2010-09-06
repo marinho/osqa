@@ -364,6 +364,19 @@ def signout(request):
 
     url : /signout/"
     """
+    request.session.delete('facebook_session_key')
+    request.session.delete('facebook_user_id')
+    request.session.save()
 
     logout(request)
-    return HttpResponseRedirect(reverse('index'))
+    resp = HttpResponseRedirect(reverse('index'))
+
+    fbs_cookies = [k for k,v in request.COOKIES.items() if k.startswith('fbs_')]
+    for cookie_name in fbs_cookies:
+        resp.delete_cookie(cookie_name)
+
+    request.facebook.session_key = None
+    request.facebook.uid = None
+
+    return resp
+
