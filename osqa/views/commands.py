@@ -129,10 +129,10 @@ def flag_post(request, id):
     if user == post.author:
         raise CannotDoOnOwnException(_('flag'))
 
-    if not (user.can_flag_offensive(post)):
+    if not (user.userosqaprofile.can_flag_offensive(post)):
         raise NotEnoughRepPointsException(_('flag posts'))
 
-    user_flag_count_today = user.get_flagged_items_count_today()
+    user_flag_count_today = user.userosqaprofile.get_flagged_items_count_today()
 
     if user_flag_count_today >= int(settings.MAX_FLAGS_PER_DAY):
         raise NotEnoughLeftException(_('flags'), str(settings.MAX_FLAGS_PER_DAY))
@@ -314,7 +314,7 @@ def delete_post(request, id):
     if not user.is_authenticated():
         raise AnonymousNotAllowedException(_('delete posts'))
 
-    if not (user.can_delete_post(post)):
+    if not (user.userosqaprofile.can_delete_post(post)):
         raise NotEnoughRepPointsException(_('delete posts'))
 
     post.mark_deleted(user)
@@ -399,7 +399,7 @@ def close(request, id):#close question
     question close
     """
     question = get_object_or_404(Question, id=id)
-    if not request.user.can_close_question(question):
+    if not request.user.userosqaprofile.can_close_question(question):
         return HttpResponseForbidden()
     if request.method == 'POST':
         form = CloseForm(request.POST)
@@ -425,7 +425,7 @@ def reopen(request, id):#re-open question
     """
     question = get_object_or_404(Question, id=id)
     # open question
-    if not request.user.can_reopen_question(question):
+    if not request.user.userosqaprofile.can_reopen_question(question):
         return HttpResponseForbidden()
     if request.method == 'POST' :
         Question.objects.filter(id=question.id).update(closed=False,

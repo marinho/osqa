@@ -189,7 +189,7 @@ def notify_award_message(instance, created, **kwargs):
 
         msg = (u"Congratulations, you have received a badge '%s'. " \
                 + u"Check out <a href=\"%s\">your profile</a>.") \
-                % (instance.badge.name, user.osqauserprofile)
+                % (instance.badge.name, user.userosqaprofile)
 
         user.message_set.create(message=msg)
 

@@ -69,10 +69,11 @@ def command(func):
                 'error_message': str(e)
             }
 
-        if request.is_ajax():
+        # XXX - commented by Marinho
+        #if request.is_ajax():
         # Doesn't work properly on some browsers
-            return HttpResponse(simplejson.dumps(response), mimetype="application/json")
-        else:
-            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+        return HttpResponse(simplejson.dumps(response), mimetype="application/json")
+        #else:
+        #    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
     return decorated

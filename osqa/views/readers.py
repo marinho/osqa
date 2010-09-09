@@ -224,7 +224,7 @@ def question(request, id, slug):
     page = int(request.GET.get('page', 1))
     view_id, order_by = get_answer_sort_order(request)
 
-    if question.deleted and not request.user.can_view_deleted_post(question):
+    if question.deleted and not request.user.userosqaprofile.can_view_deleted_post(question):
         raise Http404
 
     answer_form = AnswerForm(question)

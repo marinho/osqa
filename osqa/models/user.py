@@ -152,7 +152,7 @@ class UserOSQAProfile(models.Model):
 
     def get_flagged_items_count_today(self):
         today = datetime.date.today()
-        return self.flaggeditems.filter(flagged_at__range=(today - datetime.timedelta(days=1), today)).count()
+        return self.user.flaggeditems.filter(flagged_at__range=(today - datetime.timedelta(days=1), today)).count()
 
     def get_visible_answers(self, question):
         if self.user.is_superuser:
