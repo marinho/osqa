@@ -320,9 +320,8 @@ def delete_post(request, id):
     post.mark_deleted(user)
 
     return {
-        'commands': {
-                'mark_deleted': [post.node_type, id]
-            }
+        'commands': {'mark_deleted': [post.node_type, id]},
+        'message': 'Deleted with success!',
     }
 
 @command
