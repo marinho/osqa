@@ -317,7 +317,10 @@ def delete_post(request, id):
     if not (user.userosqaprofile.can_delete_post(post)):
         raise NotEnoughRepPointsException(_('delete posts'))
 
-    post.mark_deleted(user)
+    if getattr(settings, 'QUESTION_MARK_DELETED', True):
+        post.mark_deleted(user)
+    else:
+        post.delete()
 
     return {
         'commands': {'mark_deleted': [post.node_type, id]},
