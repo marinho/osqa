@@ -117,10 +117,12 @@ def comments(post, user):
         context.update(dict(c.__dict__))
         comments.append(context)
 
+    can_comment = user.is_authenticated() and user.userosqaprofile.can_comment(post) or False
+
     return {
         'comments': comments,
         'post': post,
-        'can_comment': user.userosqaprofile.can_comment(post),
+        'can_comment': can_comment,
         'max_length': settings.FORM_MAX_COMMENT_BODY,
         'showing': showing,
         'total': len(all_comments),

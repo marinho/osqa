@@ -236,7 +236,7 @@ def question(request, id, slug):
             answers = [a for a in answers.order_by("-accepted", order_by)
                    if not a.deleted or a.author == request.user]
     else:
-        answers = []
+        answers = question.answers.filter(deleted=False)
 
     objects_list = Paginator(answers, ANSWERS_PAGE_SIZE)
     page_objects = objects_list.page(page)
