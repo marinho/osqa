@@ -1,7 +1,9 @@
 import osqa.activity
 import osqa.reputation
 import osqa.badges
-import osqa.subscriptions
+
+# XXX THIS FILE IS MISSING - by Marinho
+#import osqa.subscriptions
 
 from osqa.modules import get_modules_script
 

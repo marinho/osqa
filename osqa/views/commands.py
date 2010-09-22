@@ -253,9 +253,9 @@ def comment(request, id):
     data = {
         "user_ip":request.META["REMOTE_ADDR"],
         "user_agent":request.environ['HTTP_USER_AGENT'],
-        "comment_author":request.user.real_name,
+        "comment_author":request.user.userosqaprofile.real_name,
         "comment_author_email":request.user.email,
-        "comment_author_url":request.user.website,
+        "comment_author_url":request.user.userosqaprofile.website,
         "comment":comment_text
     }
     if Node.isSpam(comment_text, data):
@@ -265,7 +265,7 @@ def comment(request, id):
         return {
             'commands': {
                 'insert_comment': [
-                    id, comment.id, comment_text, user.username, user.get_profile_url(), reverse('delete_comment', kwargs={'id': comment.id})
+                    id, comment.id, comment_text, user.username, user.userosqaprofile.get_profile_url(), reverse('delete_comment', kwargs={'id': comment.id})
                 ]
             }
         }
