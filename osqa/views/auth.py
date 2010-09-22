@@ -216,7 +216,7 @@ def request_temp_login(request):
             except:
                 hash = ValidationHash.objects.create_new(user, 'templogin', [user.id])
 
-            send_email(_("Temporary login link"), [(user.username, user.email)], "auth/temp_login_email.html", {
+            send_email(_("Temporary login link"), [(user.username, user.email)], "osqa/auth/temp_login_email.html", {
                 'temp_login_code': hash,
                 'user': user
             })

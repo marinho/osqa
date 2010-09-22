@@ -44,7 +44,7 @@ def feedback(request):
             recipients = [(adm.username, adm.email) for adm in User.objects.filter(is_superuser=True)]
 
             send_email(settings.EMAIL_SUBJECT_PREFIX + _("Feedback message from %(site_name)s") % {'site_name': settings.APP_SHORT_NAME},
-                       recipients, "notifications/feedback.html", context)
+                       recipients, "osqa/notifications/feedback.html", context)
             
             msg = _('Thanks for the feedback!')
             request.user.message_set.create(message=msg)
