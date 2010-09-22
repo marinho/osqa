@@ -73,13 +73,14 @@ class Award(GenericContent, UserContent):
             self.badge.awarded_count += 1
             self.badge.save()
 
+            profile = self.user.userosqaprofile
             if self.badge.type == Badge.GOLD:
-                self.user.gold += 1
+                profile.gold += 1
             if self.badge.type == Badge.SILVER:
-                self.user.silver += 1
+                profile.silver += 1
             if self.badge.type == Badge.BRONZE:
-                self.user.bronze += 1
-            self.user.save()
+                profile.bronze += 1
+            profile.save()
 
     class Meta:
         #unique_together = ('content_type', 'object_id', 'user', 'badge')
