@@ -197,6 +197,15 @@ def _edit_question(request, question):
 
             return HttpResponseRedirect(question.get_absolute_url())
     else:
+        if not question.active_revision:
+            question.create_revision(
+                request.user,
+                summary=question.summary,
+                title=question.title,
+                tagnames=question.tagnames,
+                body=question.body,
+                )
+
         revision_form = RevisionForm(question)
         form = EditQuestionForm(question)
 

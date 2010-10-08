@@ -126,7 +126,8 @@ class Node(BaseModel, NodeContent, DeletableContent):
             self.save()
             revision.revision = 1
         else:
-            revision.revision = self.revisions.aggregate(last=models.Max('revision'))['last'] + 1
+            last = self.revisions.aggregate(last=models.Max('revision'))['last'] or 0
+            revision.revision = last + 1
 
         revision.node_id = self.id
         revision.save()
