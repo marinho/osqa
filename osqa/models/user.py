@@ -127,7 +127,7 @@ class UserOSQAProfile(models.Model):
         return reverse('user_profile', kwargs={'id':self.user.pk, 'slug':self.user.username})
 
     def get_profile_link(self):
-        profile_link = u'<a href="%s">%s</a>' % (self.get_profile_url(),self.user.username)
+        profile_link = u'<a href="%s">%s</a>' % (self.get_profile_url(), self.real_name or self.user.username)
         return mark_safe(profile_link)
 
     def get_vote_count_today(self):
